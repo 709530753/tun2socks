@@ -299,7 +299,7 @@ public final class TSTCPSocket {
         
         
         
-        assert(tcp_close(pcb)==err_t(ERR_OK))
+        tcp_close(pcb)
         
         release()
         // the lwip will handle the following things for us
