@@ -33,6 +33,7 @@
 #define __LWIP_DEF_H__
 
 /* arch.h might define NULL already */
+#include <endian.h>
 #include "lwip/arch.h"
 #include "lwip/opt.h"
 

@@ -11,7 +11,7 @@ CFLAGS =  -Ilwip  \
 
 CFLAGS += -isystem../Nexus/quic_protocol/third_party/android_tools/ndk/sources/cxx-stl/llvm-libc++/libcxx/include -isystem../Nexus/quic_protocol/third_party/android_tools/ndk/sources/cxx-stl/llvm-libc++abi/libcxxabi/include -isystem../Nexus/quic_protocol/third_party/android_tools/ndk/sources/android/support/include --sysroot=../Nexus/quic_protocol/third_party/android_tools/ndk/platforms/android-16/arch-arm 
 
-CFLAGS += -march=armv7-a -mfloat-abi=softfp -mthumb -mthumb-interwork -mtune=generic-armv7-a -DLWIP_PLATFORM_BYTESWAP=1
+CFLAGS += -march=armv7-a -mfloat-abi=softfp -mthumb -mthumb-interwork -mtune=generic-armv7-a 
 
 LDFLAGS = -pthread
 
