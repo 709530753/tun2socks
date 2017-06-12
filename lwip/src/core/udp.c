@@ -516,8 +516,9 @@ udp_sendto_chksum(struct udp_pcb *pcb, struct pbuf *p, ip_addr_t *dst_ip,
   if (netif == NULL) {
     LWIP_DEBUGF(UDP_DEBUG | LWIP_DBG_LEVEL_SERIOUS, ("udp_send: No route to %"U16_F".%"U16_F".%"U16_F".%"U16_F"\n",
       ip4_addr1_16(dst_ip), ip4_addr2_16(dst_ip), ip4_addr3_16(dst_ip), ip4_addr4_16(dst_ip)));
-    UDP_STATS_INC(udp.rterr);
-    return ERR_RTE;
+   // UDP_STATS_INC(udp.rterr);
+    //return ERR_RTE; //xubo change
+		netif = netif_list ;
   }
 #if LWIP_CHECKSUM_ON_COPY
   return udp_sendto_if_chksum(pcb, p, dst_ip, dst_port, netif, have_chksum, chksum);
@@ -628,6 +629,8 @@ udp_sendto_if_chksum(struct udp_pcb *pcb, struct pbuf *p, ip_addr_t *dst_ip,
     /* use outgoing network interface IP address as source address */
     src_ip = &(netif->ip_addr);
   } else {
+
+#if 0 //xubo tmp
     /* check if UDP PCB local IP address is correct
      * this could be an old address if netif->ip_addr has changed */
     if (!ip_addr_cmp(&(pcb->local_ip), &(netif->ip_addr))) {
@@ -640,6 +643,7 @@ udp_sendto_if_chksum(struct udp_pcb *pcb, struct pbuf *p, ip_addr_t *dst_ip,
       }
       return ERR_VAL;
     }
+#endif		
     /* use UDP PCB local IP address as source address */
     src_ip = &(pcb->local_ip);
   }
