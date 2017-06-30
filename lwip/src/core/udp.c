@@ -797,6 +797,7 @@ udp_bind(struct udp_pcb *pcb, ip_addr_t *ipaddr, u16_t port)
     /* port matches that of PCB in list and REUSEADDR not set -> reject */
     else {
 #endif /* SO_REUSE */
+#if 0
       if ((ipcb->local_port == port) &&
           /* IP address matches, or one is IP_ADDR_ANY? */
           (ip_addr_isany(&(ipcb->local_ip)) ||
@@ -807,6 +808,7 @@ udp_bind(struct udp_pcb *pcb, ip_addr_t *ipaddr, u16_t port)
                     ("udp_bind: local port %"U16_F" already bound by another pcb\n", port));
         return ERR_USE;
       }
+#endif //xubo mark
     }
   }
 
