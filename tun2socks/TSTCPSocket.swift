@@ -177,20 +177,23 @@ public final class TSTCPSocket {
         tryDequeuePendingData()
     }
     
-    func recved(_ buf: UnsafeMutablePointer<pbuf>?) {
+    public func  updateRxWindow(_ length:UInt16) {
+		if isValid {
+		   tcp_recved(pcb, length)
+		}
+   }
+   
+   func recved(_ buf: UnsafeMutablePointer<pbuf>?) {
         if buf == nil {
             delegate?.localDidClose(self)
         } else {
             let data = NSMutableData(length: Int((buf?.pointee.tot_len)!))!
             pbuf_copy_partial(buf, data.mutableBytes, (buf?.pointee.tot_len)!, 0)
-            delegate?.didReadData(data as Data, from: self)
-            if isValid {
-                tcp_recved(pcb, (buf?.pointee.tot_len)!)
-            }
+			delegate?.didReadData(data as Data, from: self)
             pbuf_free(buf)
         }
     }
-    
+	
     private func tcpWrite(pointer:UnsafeRawPointer, validSize:UInt16) -> Bool {
         
         if Int32(tcp_write(pcb!, pointer, validSize, UInt8(0))) == ERR_OK {
